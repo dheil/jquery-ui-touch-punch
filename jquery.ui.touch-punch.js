@@ -25,8 +25,7 @@
   var mouseProto = $.ui.mouse.prototype,
       _mouseInit = mouseProto._mouseInit,
       _mouseDestroy = mouseProto._mouseDestroy,
-      touchHandled,
-      focusables = ['INPUT', 'TEXTAREA'];
+      touchHandled;
 
   /**
    * Simulate a mouse event based on a corresponding touch event
@@ -40,10 +39,18 @@
       return;
     }
 
-    event.preventDefault();
+    //event.preventDefault();
 
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
+
+
+      //Check if element is an input or a textarea    
+    if ($(touch.target).is("input") || $(touch.target).is("textarea")) {    
+      event.stopPropagation();    
+    } else {    
+      event.preventDefault();   
+    }
 
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
@@ -88,8 +95,6 @@
     self._touchMoved = false;
     // Interaction time
     this._startedMove = event.timeStamp;
-
-    this._targetIsFocusable = $.inArray(event.target.nodeName, focusables) >= 0;
 
     // Simulate the mouseover event
     simulateMouseEvent(event, 'mouseover');
@@ -145,11 +150,6 @@
     if (!this._touchMoved || timeMoving < 500) {
       // Simulate the click event
       simulateMouseEvent(event, 'click');
-    }
-
-    // trigger focus on inputs and other elements that can be focused
-    if( this._targetIsFocusable ){
-      $(event.target).focus();
     }
 
     // Unset the flag to allow other widgets to inherit the touch event
