@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Touch Punch 0.2.3
+ * jQuery UI Touch Punch 0.2.3 (forked, see below)
  *
  * Copyright 2011–2014, Dave Furfero
  * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -7,6 +7,10 @@
  * Depends:
  *  jquery.ui.widget.js
  *  jquery.ui.mouse.js
+ *
+ * This version is forked from: https://github.com/dukex/jquery-ui-touch-punch
+ * And available at: https://github.com/nobitagit/jquery-ui-touch-punch
+ *
  */
 (function ($) {
 
